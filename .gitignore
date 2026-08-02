@@ -1,0 +1,14 @@
+# Everything this script downloads or generates at runtime.
+# Only the launcher script itself (and its docs) belong in this repo.
+
+_rust/
+_RUST/
+_BACKUP/
+steamcmd*
+Oxide.Rust.zip
+Carbon.Windows.Release*
+RustDedicated_Data/
+autoRestart.bat
+focusServerWindow.vbs
+*.zip
+*.log
