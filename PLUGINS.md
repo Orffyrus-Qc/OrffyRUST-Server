@@ -1,7 +1,7 @@
 # Plugin Reference
 
 Every plugin/config the script can install, grouped by the section headers used inside
-`_OrffyRUST_v1.9.2.bat`. **State** reflects this snapshot of the script — see
+`_OrffyRUST_v1.9.3.bat`. **State** reflects this snapshot of the script — see
 [SETUP.md § Toggling plugins](SETUP.md#4-toggling-plugins-onoff) for how to flip a plugin on or
 off yourself (comment/uncomment its `GOTO :JUMP_...` line).
 

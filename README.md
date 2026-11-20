@@ -4,7 +4,7 @@ A single Windows batch file that installs, configures, updates, runs, watchdogs,
 [Facepunch Rust](https://rust.facepunch.com/) dedicated server — including its Oxide or Carbon
 modding framework and a curated set of uMod/Dropbox-hosted plugins.
 
-Everything the script does is driven from one file: `_OrffyRUST_v1.9.2.bat`. No external
+Everything the script does is driven from one file: `_OrffyRUST_v1.9.3.bat`. No external
 installer, no separate config tool — you edit the `.bat` in Notepad++ and re-run it.
 
 > This script was written for personal use on a Windows Rust server host. It is shared here for
@@ -72,7 +72,7 @@ files.
 ## Repo layout
 
 ```
-_OrffyRUST_v1.9.2.bat   The entire script — install, update, launch, watchdog, backup
+_OrffyRUST_v1.9.3.bat   The entire script — install, update, launch, watchdog, backup
 SETUP.md                Configuration walkthrough: renaming, RCON, maps, Oxide/Carbon, Dropbox links
 PLUGINS.md              Full plugin list, source (uMod vs. Dropbox), and enabled/disabled state
 .gitignore              Excludes the server install, backups, and generated files from version control

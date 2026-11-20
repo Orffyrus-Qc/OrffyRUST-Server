@@ -1,6 +1,6 @@
 @echo off
 ::To rename this script: First, rename this file. Then edit it in notepad++ / select the Title above and press CTRL+F / use replace tool, use the name you want and press the Replace All button.
-Title _OrffyRUST_v1.9.2
+Title _OrffyRUST_v1.9.3
 ::Comment the line below to skip the update process and directly start the server. But this will break some others fetures of the script recommanded to use it after game file was created. For script dev. usage only.
 GOTO :JUMP_START-SERVER
 :START-SERVER
@@ -154,13 +154,13 @@ set line1.3=focusServerWindow.vbs
 set line1.4=del focusServerWindow.vbs
 set line2=:retryDelay
 set line3=cls
-set line4=CALL :checkForBatchIsRunning "_OrffyRUST_v1.9.2"
+set line4=CALL :checkForBatchIsRunning "_OrffyRUST_v1.9.3"
 set line5=echo.
 set line6=echo                 AUTO-RESTART for RUST SERVER
 set line7=echo.
 set line8=echo Checking for auto-restart Rust server, dont close this window.
 set line9=echo If you want to shutdown the server close this window before sending QUIT command on the server.
-set line10=IF "%%is_running%%" EQU "0" (_OrffyRUST_v1.9.2.bat EXIT /b) ELSE (GOTO :WAIT)
+set line10=IF "%%is_running%%" EQU "0" (_OrffyRUST_v1.9.3.bat EXIT /b) ELSE (GOTO :WAIT)
 set line11=:WAIT
 set line12=TIMEOUT /t 10
 set line13=GOTO :retryDelay
@@ -173,7 +173,7 @@ set line19=GOTO :EOF
 echo %line0% > autoRestart.bat
 echo %line1% >> autoRestart.bat
 echo echo Dim ObjShell :Set ObjShell = CreateObject("Wscript.Shell") ^> focusServerWindow.vbs >> autoRestart.bat
-echo echo ObjShell.AppActivate("_OrffyRUST_v1.9.2") ^>^> focusServerWindow.vbs >> autoRestart.bat
+echo echo ObjShell.AppActivate("_OrffyRUST_v1.9.3") ^>^> focusServerWindow.vbs >> autoRestart.bat
 echo %line1.3% >> autoRestart.bat
 echo %line1.4% >> autoRestart.bat
 echo %line2% >> autoRestart.bat

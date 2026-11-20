@@ -1,7 +1,7 @@
 # Setup Guide
 
 This walks through every piece of the script you're expected to configure before running it.
-Line numbers refer to `_OrffyRUST_v1.9.2.bat` in this repo.
+Line numbers refer to `_OrffyRUST_v1.9.3.bat` in this repo.
 
 ## 1. Renaming the script
 
