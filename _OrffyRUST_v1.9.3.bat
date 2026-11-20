@@ -61,11 +61,18 @@ GOTO :JUMP_START-SERVER
 ::                Craggy Island
 ::
 echo %~dp0 && cd _rust
-call RustDedicated.exe -batchmode -server.port 28015 -queryport 28016 -rcon.port 28017 -app.port 28018 -logfile^
+if exist "RustDedicated.exe" goto :RUST_SERVER_LAUNCH
+echo.
+echo RustDedicated.exe is not installed, so this window was closing instead of starting the server.
+cd ..
+pause
+goto :eof
+:RUST_SERVER_LAUNCH
+call RustDedicated.exe -batchmode -server.port 28015 -queryport 28016 -rcon.port 28017 -app.port 28018 -logfile ^
 -server.hostname "OrffyRUST_PRIVATE" ^
--server.level "Procedural Map"
--server.seed 2322396
--server.worldsize 1004
+-server.level "Procedural Map" ^
+-server.seed 2322396 ^
+-server.worldsize 1004 ^
 -rcon.password "YOUR_RCON_PASSWORD_HERE" ^
 -server.identity "backupSystem" ^
 -server.maxplayers 120 ^
@@ -218,7 +225,15 @@ echo. && echo SteamCMD-OK
 ::GOTO :JUMP-steam_isatall-update
 ::	NEED TO BE TESTED and if map change or not change did bp's stay?--- If the command below run after the forced wipe day, it will auto-wipe and override the players Blueprints.
 echo. && echo Install RUST server using SteamCMD
-steamcmd +force_install_dir ./_RUST/ +login anonymous +app_update 258550 -beta aux02 +quit
+::Public branch. aux02 is dead and SteamCMD quits with "Failed to set beta" before any download.
+steamcmd +force_install_dir ./_RUST/ +login anonymous +app_update 258550 validate +quit
+if exist "_rust\RustDedicated.exe" goto :RUST_SERVER_INSTALLED
+echo.
+echo SteamCMD did not install RustDedicated.exe. The script used to keep going and then close.
+echo.
+pause
+goto :eof
+:RUST_SERVER_INSTALLED
 ::steamcmd +force_install_dir ./_RUST/ +login anonymous +app_update 258550 -beta staging +quit
 ::steamcmd +force_install_dir ./_RUST/ +login anonymous +app_update 258550 -beta aux02 +quit
 ::To use -beta Staging Branch: Uncomment the line above and comment the other line above (comment a line with :: also prevent the line to be excute).
