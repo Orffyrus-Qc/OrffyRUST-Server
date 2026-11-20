@@ -525,7 +525,7 @@ cd.. && cd.. && cd..
 :JUMP_ServerArmour.json
 ::---------------------------------
 ::CopyPaste.cs
-GOTO :JUMP_CopyPaste.cs
+::GOTO :JUMP_CopyPaste.cs
 cd _rust\oxide\plugins\ && IF EXIST "CopyPaste.cs" (del /Q CopyPaste.cs && goto :CopyPaste.cs-download) ELSE (goto :CopyPaste.cs-download)
 :CopyPaste.cs-download
 powershell -Command Invoke-WebRequest -Uri "https://umod.org/plugins/CopyPaste.cs" -OutFile ".\CopyPaste.cs"
