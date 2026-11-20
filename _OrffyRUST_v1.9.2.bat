@@ -126,10 +126,12 @@ GOTO :QUIT-SERVER
 ::*about dropbox after you copied the link if you create new folder into drop box and drag/drop the file into it, the link stay the same.
 ::And you paste the copied link at the corresponding location in the section below (OXIDE PLUGINS). Add more plugins, config, data, maps and server file if you wish.
 ::
-::Exemple: powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" \"" -OutFile ".\PermissionsManager.cs"
+::Exemple: call :DropboxGet "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" ".\PermissionsManager.cs"
 ::
 ::With the dropbox link copied you will have a 0 at the end of the link. Remove it and replace it by a 1
 ::*Because the link with the 0 at the end is for opening a dropbox page in browser and the 1 is to make it direct download.
+::If that link is still pasteYourDropboxLinkHere, or Dropbox no longer has the file, the download is skipped.
+::Any copy already on disk is kept and the script continues.
 ::
 ::I know it can be a bit confusing, but it's easier to learn how to use it than to write it from scratch.
 ::
@@ -314,8 +316,8 @@ cd.. && cd..
 ::
 ::                                                    OXIDE PLUGINS | Install / Update
 ::
-::HOW TO ESCAPE SPECIAL CARACTERE &    \""&\""    (because dropbox using  &  sign in link name and batch language dont like it).
-::It can also be add before and after entire link. Ex: \"" "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" \""
+::Dropbox links contain &. Keep the whole URL inside the quotes of call :DropboxGet so the & stays part of the link.
+::Exemple: call :DropboxGet "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" ".\PermissionsManager.cs"
 ::
 ::                             !!  In this section you must use comment this sign   ::   before GOTO to enable it  !!
 ::
@@ -347,11 +349,11 @@ echo. && echo ---------------------------------------- Server Administration plu
 ::---------------------------------
 ::PermissionsManager.cs
 ::GOTO :JUMP_PermissionsManager.cs
-cd _rust\oxide\plugins\ && IF EXIST "PermissionsManager.cs" (del /Q PermissionsManager.cs && goto :PermissionsManager.cs-download) ELSE (goto :PermissionsManager.cs-download)
+cd _rust\oxide\plugins\
 :PermissionsManager.cs-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" \"" -OutFile ".\PermissionsManager.cs"
+call :DropboxGet "https://www.dropbox.com/scl/fi/2hv0t8l8wlmhio2ex75kv/PermissionsManager.cs?rlkey=wkmojk7ahygbnd2kw1taqvrxt&dl=1" ".\PermissionsManager.cs"
+if not errorlevel 1 echo  PermissionsManager.cs Updated
 cd.. && cd.. && cd..
-echo  PermissionsManager.cs Updated
 :JUMP_PermissionsManager.cs
 ::---------------------------------
 ::PlayerAdministration.cs
@@ -383,11 +385,11 @@ echo  AdminRadar.cs Updated
 ::---------------------------------
 ::AdminRadar.json
 GOTO :JUMP_AdminRadar.json
-cd _rust\oxide\config\ && IF EXIST "AdminRadar.json" (del /Q AdminRadar.json && goto :AdminRadar.json-download) ELSE (goto :AdminRadar.json-download)
+cd _rust\oxide\config\
 :AdminRadar.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/znf6d9lmjzf5pnqnrxp71/AdminRadar.json?rlkey=qkmqg77um060krnedgj4ysjky&dl=1" \"" -OutFile ".\AdminRadar.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/znf6d9lmjzf5pnqnrxp71/AdminRadar.json?rlkey=qkmqg77um060krnedgj4ysjky&dl=1" ".\AdminRadar.json"
+if not errorlevel 1 echo  AdminRadar.json Updated
 cd.. && cd.. && cd..
-echo  AdminRadar.json Updated
 :JUMP_AdminRadar.json
 ::---------------------------------
 ::NoGiveNotices.cs
@@ -410,11 +412,11 @@ echo  RaidTracker.cs Updated
 ::---------------------------------
 ::RaidTracker.json (Discord WebHook Setting)
 GOTO :JUMP_RaidTracker.json
-cd _rust\oxide\config\ && IF EXIST "RaidTracker.json" (del /Q RaidTracker.json && goto :RaidTracker.json-download) ELSE (goto :RaidTracker.json-download)
+cd _rust\oxide\config\
 :RaidTracker.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/01i3lwge04mprub33v3zs/RaidTracker.json?rlkey=xpt7vt3j0iyntifzysilbs9hw&dl=1" \"" -OutFile ".\RaidTracker.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/01i3lwge04mprub33v3zs/RaidTracker.json?rlkey=xpt7vt3j0iyntifzysilbs9hw&dl=1" ".\RaidTracker.json"
+if not errorlevel 1 echo  RaidTracker.json Updated
 cd.. && cd.. && cd..
-echo  RaidTracker.json Updated
 :JUMP_RaidTracker.json
 ::---------------------------------
 ::AdminLogger.cs
@@ -428,11 +430,11 @@ echo  AdminLogger.cs Updated
 ::---------------------------------
 ::AdminLogger.json (Discord WebHook Setting)
 GOTO :JUMP_AdminLogger.json
-cd _rust\oxide\config\ && IF EXIST "AdminLogger.json" (del /Q AdminLogger.json && goto :AdminLogger.json-download) ELSE (goto :AdminLogger.json-download)
+cd _rust\oxide\config\
 :AdminLogger.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\AdminLogger.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\AdminLogger.json"
+if not errorlevel 1 echo  AdminLogger.json Updated
 cd.. && cd.. && cd..
-echo  AdminLogger.json Updated
 :JUMP_AdminLogger.json
 ::---------------------------------
 ::NoGreen.cs
@@ -464,11 +466,11 @@ echo  TimeOfDay.cs Updated
 ::---------------------------------
 ::TimeOfDay.json
 GOTO :JUMP_TimeOfDay.json
-cd _rust\oxide\config\ && IF EXIST "TimeOfDay.json" (del /Q TimeOfDay.json && goto :TimeOfDay.json-download) ELSE (goto :TimeOfDay.json-download)
+cd _rust\oxide\config\
 :TimeOfDay.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/b6zn6w3yxlzy7mzfk1myo/TimeOfDay.json?rlkey=a82odi2t4vvi4otcm4ei2biqu&dl=1" \"" -OutFile ".\TimeOfDay.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/b6zn6w3yxlzy7mzfk1myo/TimeOfDay.json?rlkey=a82odi2t4vvi4otcm4ei2biqu&dl=1" ".\TimeOfDay.json"
+if not errorlevel 1 echo  TimeOfDay.json Updated
 cd.. && cd.. && cd..
-echo  TimeOfDay.json Updated
 :JUMP_TimeOfDay.json
 ::---------------------------------
 ::HeliControl.cs
@@ -500,11 +502,11 @@ echo  ServerArmour.cs Updated
 ::---------------------------------
 ::ServerArmour.json
 GOTO :JUMP_ServerArmour.json
-cd _rust\oxide\config\ && IF EXIST "ServerArmour.json" (del /Q ServerArmour.json && goto :ServerArmour.json-download) ELSE (goto :ServerArmour.json-download)
+cd _rust\oxide\config\
 :ServerArmour.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\ServerArmour.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\ServerArmour.json"
+if not errorlevel 1 echo  ServerArmour.json Updated
 cd.. && cd.. && cd..
-echo  ServerArmour.json Updated
 :JUMP_ServerArmour.json
 ::---------------------------------
 ::CopyPaste.cs
@@ -518,22 +520,24 @@ echo  CopyPaste.cs Updated
 ::---------------------------------
 ::CopyPaste.json
 GOTO :JUMP_CopyPaste.json
-cd _rust\oxide\config\ && IF EXIST "CopyPaste.json" (del /Q CopyPaste.json && goto :CopyPaste.json-download) ELSE (goto :CopyPaste.json-download)
+cd _rust\oxide\config\
 :CopyPaste.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\CopyPaste.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\CopyPaste.json"
+if not errorlevel 1 echo  CopyPaste.json Updated
 cd.. && cd.. && cd..
-echo  CopyPaste.json Updated
 :JUMP_CopyPaste.json
 ::---------------------------------
 ::copypasteDATA
 GOTO :JUMP_copypasteDATA
-cd _rust\oxide\data\ && IF EXIST "copypaste" (rmdir /S /Q copypaste && goto :copypasteDATA-download) ELSE (goto :copypasteDATA-download)
+cd _rust\oxide\data\
 :copypasteDATA-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fo/zr6a64abw0ru7nx3iz81f/h?rlkey=txab0eyx1hpjy8383wuilokg9&dl=1" \"" -OutFile ".\copypaste.zip"
-powershell -Command "Expand-Archive copypaste.zip -DestinationPath ./copypaste"
+call :DropboxGet "https://www.dropbox.com/scl/fo/zr6a64abw0ru7nx3iz81f/h?rlkey=txab0eyx1hpjy8383wuilokg9&dl=1" ".\copypaste.zip"
+if errorlevel 1 goto :copypasteDATA_keep
+powershell -NoProfile -Command "$ErrorActionPreference='Stop'; try { if (Test-Path -LiteralPath 'copypaste.new') { Remove-Item -LiteralPath 'copypaste.new' -Recurse -Force }; Expand-Archive -LiteralPath 'copypaste.zip' -DestinationPath 'copypaste.new' -Force; if (Test-Path -LiteralPath 'copypaste') { Remove-Item -LiteralPath 'copypaste' -Recurse -Force }; Rename-Item -LiteralPath 'copypaste.new' -NewName 'copypaste'; exit 0 } catch { if (Test-Path -LiteralPath 'copypaste.new') { Remove-Item -LiteralPath 'copypaste.new' -Recurse -Force -ErrorAction SilentlyContinue }; Write-Host $_.Exception.Message; exit 1 }"
+if errorlevel 1 (echo  copypasteDATA skipped, archive invalid. Continuing.) else (echo  copypasteDATA Updated)
 del /Q copypaste.zip
+:copypasteDATA_keep
 cd.. && cd.. && cd..
-echo  copypasteDATA Updated
 :JUMP_copypasteDATA
 ::---------------------------------
 ::
@@ -542,11 +546,11 @@ echo. && echo ------------------------------------------------ Server Plugins --
 ::---------------------------------
 ::Oxide.Ext.Discord.dll
 GOTO :JUMP_Oxide.Ext.Discord.dll
-cd _rust\RustDedicated_Data\Managed\ && IF EXIST "Oxide.Ext.Discord.dll" (del /Q Oxide.Ext.Discord.dll && goto :Oxide.Ext.Discord.dll-download) ELSE (goto :Oxide.Ext.Discord.dll-download)
+cd _rust\RustDedicated_Data\Managed\
 :Oxide.Ext.Discord.dll-download             
-powershell -Command Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/8h7ii2yqa5jogmwc8jtr1/Oxide.Ext.Discord.dll?rlkey=d7jiavrxpmxysoq2as5bwjk35`&dl=1" -OutFile ".\Oxide.Ext.Discord.dll"
+call :DropboxGet "https://www.dropbox.com/scl/fi/8h7ii2yqa5jogmwc8jtr1/Oxide.Ext.Discord.dll?rlkey=d7jiavrxpmxysoq2as5bwjk35&dl=1" ".\Oxide.Ext.Discord.dll"
+if not errorlevel 1 echo  Oxide.Ext.Discord.dll Updated
 cd.. && cd.. && cd..
-echo  Oxide.Ext.Discord.dll Updated
 :JUMP_Oxide.Ext.Discord.dll
 ::---------------------------------
 ::PlaceholderAPI.cs
@@ -592,20 +596,20 @@ cd.. && cd.. && cd..
 ::SkinBox.cs
 GOTO :JUMP_SkinBox.cs
 cd _rust\oxide\plugins\
-IF EXIST "SkinBox.cs" (del /Q SkinBox.cs && goto :SkinBox.cs-download) ELSE (goto :SkinBox.cs-download)
+
 :SkinBox.cs-download
-powershell -Command Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/d205zvk5kc34rgew87653/SkinBox.cs?rlkey=r0cn32oz2ners7w6i1n5wa808`&dl=1" -OutFile ".\SkinBox.cs"
-echo  SkinBox.cs Updated
+call :DropboxGet "https://www.dropbox.com/scl/fi/d205zvk5kc34rgew87653/SkinBox.cs?rlkey=r0cn32oz2ners7w6i1n5wa808&dl=1" ".\SkinBox.cs"
+if not errorlevel 1 echo  SkinBox.cs Updated
 cd.. && cd.. && cd..
 :JUMP_SkinBox.cs
 ::---------------------------------
 ::ChaosExtensionDownloader.cs
 GOTO :JUMP_ChaosExtensionDownloader.cs
 cd _rust\oxide\plugins\
-IF EXIST "ChaosExtensionDownloader.cs" (del /Q ChaosExtensionDownloader.cs && goto :ChaosExtensionDownloader.cs-download) ELSE (goto :ChaosExtensionDownloader.cs-download)
+
 :ChaosExtensionDownloader.cs-download
-powershell -Command Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/fhnmqps7tku2zaigecnp3/ChaosExtensionDownloader.cs?rlkey=n5l34auaxus4h28x94hwzfief`&dl=1" -OutFile ".\ChaosExtensionDownloader.cs"
-echo  ChaosExtensionDownloader.cs Updated
+call :DropboxGet "https://www.dropbox.com/scl/fi/fhnmqps7tku2zaigecnp3/ChaosExtensionDownloader.cs?rlkey=n5l34auaxus4h28x94hwzfief&dl=1" ".\ChaosExtensionDownloader.cs"
+if not errorlevel 1 echo  ChaosExtensionDownloader.cs Updated
 cd.. && cd.. && cd..
 :JUMP_ChaosExtensionDownloader.cs
 ::---------------------------------
@@ -644,10 +648,10 @@ GOTO :JUMP_AAlertRaid.cs
 ::Do not comment the next line!
 GOTO :JUMP_AAlertRaid_md
 cd _rust\oxide\plugins\
-IF EXIST "AAlertRaid.cs" (del /Q AAlertRaid.cs && goto :AAlertRaid.cs-download) ELSE (goto :AAlertRaid.cs-download)
+
 :AAlertRaid.cs-download
-powershell -Command Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/bamdcgisa202dmp9tm36a/AAlertRaid.cs?rlkey=lwu9dwdh86fwjob8w490jv682`&dl=1" -OutFile ".\AAlertRaid.cs"
-echo  AAlertRaid.cs Updated
+call :DropboxGet "https://www.dropbox.com/scl/fi/bamdcgisa202dmp9tm36a/AAlertRaid.cs?rlkey=lwu9dwdh86fwjob8w490jv682&dl=1" ".\AAlertRaid.cs"
+if not errorlevel 1 echo  AAlertRaid.cs Updated
 cd.. && cd.. && cd..
 :JUMP_AAlertRaid.cs
 :AAlertRaid_md_RETURN
@@ -655,10 +659,10 @@ cd.. && cd.. && cd..
 ::FERMENSData.json
 GOTO :JUMP_FERMENSData.json
 cd _rust\oxide\data\AAlertRaid\
-IF EXIST "FERMENSData.json" (del /Q FERMENSData.json && goto :FERMENSData.json-download) ELSE (goto :FERMENSData.json-download)
+
 :FERMENSData.json-download
-powershell -Command Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/76prukpoex65ec9wuksjn/FERMENSData.json?rlkey=l9ekubgw390cn4sat7mzlywkk`&dl=1" -OutFile ".\FERMENSData.json"
-echo  FERMENSData.json Updated
+call :DropboxGet "https://www.dropbox.com/scl/fi/76prukpoex65ec9wuksjn/FERMENSData.json?rlkey=l9ekubgw390cn4sat7mzlywkk&dl=1" ".\FERMENSData.json"
+if not errorlevel 1 echo  FERMENSData.json Updated
 cd.. && cd.. && cd.. && cd..
 :JUMP_FERMENSData.json
 ::---------------------------------
@@ -673,11 +677,11 @@ echo  AntiOfflineRaid.cs Updated
 ::---------------------------------
 ::AntiOfflineRaid.json - Modified by Orffyrus
 GOTO :JUMP_AntiOfflineRaid.json
-cd _rust\oxide\config\ && IF EXIST "AntiOfflineRaid.json" (del /Q AntiOfflineRaid.json && goto :AntiOfflineRaid.json-download) ELSE (goto :AntiOfflineRaid.json-download)
+cd _rust\oxide\config\
 :AntiOfflineRaid.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\AntiOfflineRaid.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\AntiOfflineRaid.json"
+if not errorlevel 1 echo  AntiOfflineRaid.json Updated
 cd.. && cd.. && cd..
-echo  AntiOfflineRaid.json Updated
 :JUMP_AntiOfflineRaid.json
 ::---------------------------------
 ::TruePVE.cs
@@ -691,31 +695,31 @@ echo  TruePVE.cs Updated
 ::---------------------------------
 ::TruePVE.json
 GOTO :JUMP_TruePVE.json
-cd _rust\oxide\config\ && IF EXIST "TruePVE.json" (del /Q TruePVE.json && goto :TruePVE.json-download) ELSE (goto :TruePVE.json-download)
+cd _rust\oxide\config\
 :TruePVE.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\TruePVE.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\TruePVE.json"
+if not errorlevel 1 echo  TruePVE.json Updated
 cd.. && cd.. && cd..
-echo  TruePVE.json Updated
 :JUMP_TruePVE.json
 ::---------------------------------
 ::RaidHours - Based on TruePVE by nivex and modified by Orffyrus, need to be updated and rebuild when updated. *For help, send me a message on Discord / add me as Orffyrus
 ::To modify TruePVE for RaidHours; In TruePVE.cs you must replace the chat announcement for True PVE to Raid Hours and maby more. Just check the inside the .cs file and do some tests.
 ::RaidHours.cs   work with ZoneManager.cs
 GOTO :JUMP_RaidHours.cs
-cd _rust\oxide\plugins\ && IF EXIST "RaidHours.cs" (del /Q RaidHours.cs && goto :RaidHours.cs-download) ELSE (goto :RaidHours.cs-download)
+cd _rust\oxide\plugins\
 :RaidHours.cs-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\RaidHours.cs"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\RaidHours.cs"
+if not errorlevel 1 echo  RaidHours.cs Updated
 cd.. && cd.. && cd..
-echo  RaidHours.cs Updated
 :JUMP_RaidHours.cs
 ::---------------------------------
 ::RaidHours.json
 GOTO :JUMP_RaidHours.json
-cd _rust\oxide\config\ && IF EXIST "RaidHours.json" (del /Q RaidHours.json && goto :RaidHours.json-download) ELSE (goto :RaidHours.json-download)
+cd _rust\oxide\config\
 :RaidHours.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\RaidHours.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\RaidHours.json"
+if not errorlevel 1 echo  RaidHours.json Updated
 cd.. && cd.. && cd..
-echo  RaidHours.json Updated
 :JUMP_RaidHours.json
 ::---------------------------------
 ::ZoneManager.cs
@@ -742,11 +746,11 @@ echo  CustomVendingSetup.cs Updated
 ::---------------------------------
 ::CustomVendingSetup.json - Modified by Orffyrus
 GOTO :JUMP_CustomVendingSetup.json
-cd _rust\oxide\config\ && IF EXIST "CustomVendingSetup.json" (del /Q CustomVendingSetup.json && goto :CustomVendingSetup.json-download) ELSE (goto :CustomVendingSetup.json-download)
+cd _rust\oxide\config\
 :CustomVendingSetup.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/qzemtlerz9r900t99eqyr/CustomVendingSetup.json?rlkey=54v4tkkulv0lldhe70jt8upm2&dl=1" \"" -OutFile ".\CustomVendingSetup.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/qzemtlerz9r900t99eqyr/CustomVendingSetup.json?rlkey=54v4tkkulv0lldhe70jt8upm2&dl=1" ".\CustomVendingSetup.json"
+if not errorlevel 1 echo  CustomVendingSetup.json - Modified by Orffyrus - Updated
 cd.. && cd.. && cd..
-echo  CustomVendingSetup.json - Modified by Orffyrus - Updated
 :JUMP_CustomVendingSetup.json
 ::---------------------------------
 ::MonumentFinder.cs
@@ -791,20 +795,20 @@ echo  BuildingHealth.cs Updated
 ::---------------------------------
 ::BuildingHealth.json - Modified by Orffyrus
 GOTO :JUMP_BuildingHealth.json
-cd _rust\oxide\config\ && IF EXIST "BuildingHealth.json" (del /Q BuildingHealth.json && goto :BuildingHealth.json-download) ELSE (goto :BuildingHealth.json-download)
+cd _rust\oxide\config\
 :BuildingHealth.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/9iaffr1989hru46xb2w5a/BuildingHealth.json?rlkey=ahk8zj0nud33aqbecrnhercz2&dl=1" \"" -OutFile ".\BuildingHealth.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/9iaffr1989hru46xb2w5a/BuildingHealth.json?rlkey=ahk8zj0nud33aqbecrnhercz2&dl=1" ".\BuildingHealth.json"
+if not errorlevel 1 echo  BuildingHealth.json - Modified by Orffyrus - Updated
 cd.. && cd.. && cd..
-echo  BuildingHealth.json - Modified by Orffyrus - Updated
 :JUMP_BuildingHealth.json
 ::---------------------------------
 ::OtherBuildingHealth.cs - Modified by Orffyrus
 GOTO :JUMP_OtherBuildingHealth.cs
-cd _rust\oxide\plugins\ && IF EXIST "OtherBuildingHealth.cs" (del /Q OtherBuildingHealth.cs && goto :OtherBuildingHealth.cs-download) ELSE (goto :OtherBuildingHealth.cs-download)
+cd _rust\oxide\plugins\
 :OtherBuildingHealth.cs-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/dhx3e4xu0lcxhods3uhki/OtherBuildingHealth.cs?rlkey=bnbwxlfu9iy6uatqfr48jsxmk&dl=1" \"" -OutFile ".\OtherBuildingHealth.cs"
+call :DropboxGet "https://www.dropbox.com/scl/fi/dhx3e4xu0lcxhods3uhki/OtherBuildingHealth.cs?rlkey=bnbwxlfu9iy6uatqfr48jsxmk&dl=1" ".\OtherBuildingHealth.cs"
+if not errorlevel 1 echo  OtherBuildingHealth.cs - Modified by Orffyrus - Updated
 cd.. && cd.. && cd..
-echo  OtherBuildingHealth.cs - Modified by Orffyrus - Updated
 :JUMP_OtherBuildingHealth.cs
 ::---------------------------------
 ::
@@ -841,11 +845,11 @@ echo  EconomicsBalanceGUI.cs Updated
 ::---------------------------------
 ::EconomicsBalanceGUI.json - Modified by Orffyrus
 GOTO :JUMP_EconomicsBalanceGUI.json
-cd _rust\oxide\config\ && IF EXIST "EconomicsBalanceGUI.json" (del /Q EconomicsBalanceGUI.json && goto :EconomicsBalanceGUI.json-download) ELSE (goto :EconomicsBalanceGUI.json-download)
+cd _rust\oxide\config\
 :EconomicsBalanceGUI.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/1y29w064k525j9tjfgq0l/EconomicsBalanceGUI.json?rlkey=6mrd005wgabnjw00x01qg2ty6&dl=1" \"" -OutFile ".\EconomicsBalanceGUI.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/1y29w064k525j9tjfgq0l/EconomicsBalanceGUI.json?rlkey=6mrd005wgabnjw00x01qg2ty6&dl=1" ".\EconomicsBalanceGUI.json"
+if not errorlevel 1 echo  EconomicsBalanceGUI.json - Modified by Orffyrus - Updated
 cd.. && cd.. && cd..
-echo  EconomicsBalanceGUI.json - Modified by Orffyrus - Updated
 :JUMP_EconomicsBalanceGUI.json
 ::---------------------------------
 ::GUIShop.cs
@@ -859,12 +863,13 @@ echo  GUIShop.cs Updated
 ::---------------------------------
 ::GUIShop.json - Modified by Orffyrus  This file will be be download only if not exist. (to prevent the lost of NpcIds)  Also contain GUIShop Resources config.
 GOTO :JUMP_GUIShop.json
-cd _rust\oxide\config\ && IF EXIST "GUIShop.json" (goto :GUIShop.json-OK) ELSE (goto :GUIShop.json-download)
+cd _rust\oxide\config\
+IF EXIST "GUIShop.json" (echo  GUIShop.json already present, not replaced. & goto :GUIShop_json_keep)
 :GUIShop.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/2yoetb8di1njnuzccyzzy/GUIShop.json?rlkey=wlrd8d41iv51mvechy1lbtla5&dl=1" \"" -OutFile ".\GUIShop.json"
-:GUIShop.json-OK
+call :DropboxGet "https://www.dropbox.com/scl/fi/2yoetb8di1njnuzccyzzy/GUIShop.json?rlkey=wlrd8d41iv51mvechy1lbtla5&dl=1" ".\GUIShop.json"
+if not errorlevel 1 echo  GUIShop.json - Modified by Orffyrus - Updated
+:GUIShop_json_keep
 cd.. && cd.. && cd..
-echo  GUIShop.json - Modified by Orffyrus - Updated
 :JUMP_GUIShop.json
 ::---------------------------------
 ::HumanNPC.cs
@@ -878,10 +883,10 @@ echo  HumanNPC.cs Updated
 ::---------------------------------
 ::NpcData.json - Modified by Orffyrus
 GOTO :JUMP_NpcData.json
-cd _rust\oxide\data\HumanNPC\ && IF EXIST "NpcData.json" (del /Q NpcData.json && goto :NpcData.json-download) ELSE (goto :NpcData.json-download)
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\NpcData.json"
+cd _rust\oxide\data\HumanNPC\
+call :DropboxGet "pasteYourDropboxLinkHere" ".\NpcData.json"
+if not errorlevel 1 echo  NpcData.json - Modified by Orffyrus - Updated
 cd.. && cd.. && cd.. && cd..
-echo  NpcData.json - Modified by Orffyrus - Updated
 :JUMP_NpcData.json
 ::---------------------------------
 ::PathFinding.cs
@@ -927,32 +932,33 @@ echo  Kits.cs Updated
 ::KITS
 ::kits_data.json - Modified by Orffyrus  This file will be be download only if not exist.
 GOTO :JUMP_kits_data.json
-cd _rust\oxide\data\Kits\ && IF EXIST "kits_data.json" (goto :kits_data.json-OK) ELSE (goto :kits_data.json-download)
+cd _rust\oxide\data\Kits\
+IF EXIST "kits_data.json" (echo  kits_data.json already present, not replaced. & goto :kits_data_json_keep)
 :kits_data.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/18n54hpcbjffjlkatgv8o/kits_data.json?rlkey=qbzhoqypkb09ptikm1tsvr107&dl=1" \"" -OutFile ".\kits_data.json"
-:kits_data.json-OK
+call :DropboxGet "https://www.dropbox.com/scl/fi/18n54hpcbjffjlkatgv8o/kits_data.json?rlkey=qbzhoqypkb09ptikm1tsvr107&dl=1" ".\kits_data.json"
+if not errorlevel 1 echo  kits_data.json - Modified by Orffyrus - Updated
+:kits_data_json_keep
 cd.. && cd.. && cd.. && cd..
-echo  kits_data.json - Modified by Orffyrus - Updated
 :JUMP_kits_data.json
 ::---------------------------------
 ::KITS CONFIG
 ::Kits.json
 GOTO :JUMP_Kits.json
-cd _rust\oxide\config\ && IF EXIST "Kits.json" (del /Q Kits.json && goto :Kits.json-download) ELSE (goto :Kits.json-download)
+cd _rust\oxide\config\
 :Kits.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\Kits.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\Kits.json"
+if not errorlevel 1 echo  Kits.json Updated
 cd.. && cd.. && cd.. && cd..
-echo  Kits.json Updated
 :JUMP_Kits.json
 ::---------------------------------
 ::KITS PLAYERS
 ::player_data.json
 GOTO :JUMP_player_data.json
-cd _rust\oxide\data\Kits\ && IF EXIST "player_data.json" (del /Q player_data.json && goto :player_data.json-download) ELSE (goto :player_data.json-download)
+cd _rust\oxide\data\Kits\
 :player_data.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\player_data.json"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\player_data.json"
+if not errorlevel 1 echo  player_data.json Updated
 cd.. && cd.. && cd.. && cd..
-echo  player_data.json Updated
 :JUMP_player_data.json
 ::---------------------------------
 ::
@@ -964,11 +970,11 @@ echo  player_data.json Updated
 ::oxide.config.json
 GOTO :JUMP_oxide.config.json
 echo. && echo -------------------------------------- Oxide and sever default permissions --------------------------------------- && echo.
-cd _rust\oxide\ && IF EXIST "oxide.config.json" (del /Q oxide.config.json && goto :oxide.config.json-download) ELSE (goto :oxide.config.json-download)
+cd _rust\oxide\
 :oxide.config.json-download
-powershell -Command Invoke-WebRequest -Uri \"" "https://www.dropbox.com/scl/fi/npjgfuicjmqpwn992vpmq/oxide.config.json?rlkey=quajuxntp7jwpi7jxu8q9gmrh&dl=1" \"" -OutFile ".\oxide.config.json"
+call :DropboxGet "https://www.dropbox.com/scl/fi/npjgfuicjmqpwn992vpmq/oxide.config.json?rlkey=quajuxntp7jwpi7jxu8q9gmrh&dl=1" ".\oxide.config.json"
+if not errorlevel 1 echo  oxide.config.json Updated
 cd.. && cd..
-echo  oxide.config.json Updated
 :JUMP_oxide.config.json
 ::******************************************* (For advance users only) *****************************************
 ::************************ About "oxide.groups.data" and "oxide.users.data" permissions ************************
@@ -991,17 +997,17 @@ GOTO :JUMP_AdvancePerms
 echo. && echo ------------------------------------------------ RESTORING PERMS. ------------------------------------------------ && echo.
 ::oxide.groups.data
 GOTO :JUMP_o.group.data
-cd _rust\oxide\data\ && IF EXIST "oxide.groups.data" (del /Q oxide.groups.data && goto :oxide.groups.data-download) ELSE (goto :oxide.groups.data-download)
+cd _rust\oxide\data\
 :oxide.groups.data-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\oxide.groups.data"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\oxide.groups.data"
+if not errorlevel 1 echo  oxide.groups.data - Updated
 cd.. && cd.. && cd..
-echo  oxide.groups.data - Updated
 ::oxide.users.data
-cd _rust\oxide\data\ && IF EXIST "oxide.users.data" (del /Q oxide.users.data && goto :oxide.users.data-download) ELSE (goto :oxide.users.data-download)
+cd _rust\oxide\data\
 :oxide.users.data-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\oxide.users.data"
+call :DropboxGet "pasteYourDropboxLinkHere" ".\oxide.users.data"
+if not errorlevel 1 echo  oxide.users.data - Updated
 cd.. && cd.. && cd..
-echo  oxide.users.data - Updated
 timeout /t 8 > nul
 cls
 :JUMP_o.group.data
@@ -1035,20 +1041,20 @@ GOTO :JUMP_AdvanceCfg
 :useAdvanceCfg
 echo. && echo ------------------------------------ RESTORING SERVER CFG (for advance use) -------------------------------------- && echo.
 ::serverauto.cfg
-IF EXIST "_rust\server\backupSystem\cfg\serverauto.cfg" (del /Q _rust\server\backupSystem\cfg\serverauto.cfg && goto :serverauto.cfg-download) ELSE (goto :serverauto.cfg-download)
+
 :serverauto.cfg-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\serverauto.cfg"
-echo  serverauto.cfg - Updated
+call :DropboxGet "pasteYourDropboxLinkHere" ".\serverauto.cfg"
+if not errorlevel 1 echo  serverauto.cfg - Updated
 ::users.cfg
-IF EXIST "_rust\server\backupSystem\cfg\users.cfg" (del /Q _rust\server\backupSystem\cfg\users.cfg && goto :users.cfg-download) ELSE (goto :users.cfg-download)
+
 :users.cfg-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\users.cfg"
-echo  users.cfg - Updated
+call :DropboxGet "pasteYourDropboxLinkHere" ".\users.cfg"
+if not errorlevel 1 echo  users.cfg - Updated
 ::bans.cfg
-IF EXIST "_rust\server\backupSystem\cfg\bans.cfg" (del /Q _rust\server\backupSystem\cfg\bans.cfg && goto :bans.cfg-download) ELSE (goto :bans.cfg-download)
+
 :bans.cfg-download
-powershell -Command Invoke-WebRequest -Uri \"" "pasteYourDropboxLinkHere" \"" -OutFile ".\bans.cfg"
-echo  bans.cfg - Updated
+call :DropboxGet "pasteYourDropboxLinkHere" ".\bans.cfg"
+if not errorlevel 1 echo  bans.cfg - Updated
 :JUMP_AdvanceCfg
 ::
 ::-----------------------
@@ -1095,3 +1101,25 @@ for /f "delims=" %%i in ('dir /s /b /a-d ".\_rust\server\backupSystem\cfg\bans.c
 for /f "delims=" %%i in ('dir /s /b /a-d ".\_rust\oxide\data\Economics.json"') do (xcopy /i /Y /c "%%i" .\_BACKUP\oxide\data\"%date:/=%_%time%"\)
 ::
 cls && echo. && echo                        SAVE COMPLETE && echo. && timeout /t 3 > nul && EXIT
+
+::---------------------------------
+::DropboxGet  "URL"  "OUTFILE"
+::A placeholder link, a dead link, or a Dropbox Invalid Link page is skipped.
+::The outfile already on disk is kept. errorlevel 0 = saved, 1 = skipped.
+::The script keeps going either way.
+::---------------------------------
+:DropboxGet
+setlocal
+set "DBX_URL=%~1"
+set "DBX_OUT=%~2"
+set DBX_RC=0
+if "%DBX_URL%"=="" set DBX_RC=1
+if "%DBX_RC%"=="0" echo "%DBX_URL%"| findstr /I /C:"pasteYourDropboxLinkHere" >nul
+if "%DBX_RC%"=="0" if not errorlevel 1 set DBX_RC=1
+if "%DBX_RC%"=="1" echo  [skip] Dropbox link not set for %DBX_OUT%. Continuing.
+if "%DBX_RC%"=="1" goto :DbxDone
+powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; $u=$env:DBX_URL; $o=$env:DBX_OUT; $tmp=$o + '.orffydl'; try { if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Force }; Invoke-WebRequest -UseBasicParsing -Uri $u -OutFile $tmp | Out-Null; if (-not (Test-Path -LiteralPath $tmp)) { throw 'nothing downloaded' }; $item=Get-Item -LiteralPath $tmp; if ($item.Length -lt 1) { throw 'empty download' }; $fs=[System.IO.File]::Open($tmp,'Open','Read','ReadWrite'); $take=[Math]::Min(512,[int]$item.Length); $buf=New-Object byte[] $take; $n=$fs.Read($buf,0,$take); $fs.Close(); $head=[System.Text.Encoding]::ASCII.GetString($buf,0,$n); if ($head -match '(?i)<!DOCTYPE|<html') { throw 'Dropbox returned a web page instead of the file' }; Move-Item -LiteralPath $tmp -Destination $o -Force; exit 0 } catch { if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }; Write-Host $_.Exception.Message; exit 1 }"
+set DBX_RC=%ERRORLEVEL%
+if %DBX_RC% GEQ 1 echo  [skip] Dropbox link missing for %DBX_OUT%. Continuing.
+:DbxDone
+endlocal & exit /b %DBX_RC%

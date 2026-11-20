@@ -104,10 +104,12 @@ To set this up for your own files:
 3. Right-click a file in Dropbox → **Copy Dropbox link**.
 4. The copied link ends in `...&dl=0` — change that trailing `0` to `1` to force a direct
    download instead of opening a browser preview page.
-5. Paste the modified link into the matching `powershell -Command Invoke-WebRequest -Uri "..."`
+5. Paste the modified link into the matching `call :DropboxGet "URL" ".\filename"`
    line in the script, replacing `pasteYourDropboxLinkHere`.
-6. If the link contains an `&` character, batch needs it escaped as `` \"" & \"" `` around the URL
-   (some existing blocks already show this pattern) — otherwise the command breaks.
+6. Keep the URL inside those quotes. An `&` in the Dropbox link is part of the URL there and
+   does not need the old `\"" & \""` escape.
+
+If a link is still `pasteYourDropboxLinkHere`, or Dropbox no longer has the file (deleted share, or the HTML "Invalid Link" page), the script does not stop. That download is skipped, any copy already on disk is left in place, and the script continues with the next plugin. The server still launches.
 
 Files referenced by this mechanism throughout the script:
 

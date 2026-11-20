@@ -11,6 +11,8 @@ Legend:
 - **Source**: *uMod* = public `umod.org/plugins/...` URL · *Dropbox* = personal direct-download
   link (some are placeholders you must fill in yourself, see [SETUP.md](SETUP.md))
 
+A Dropbox link that does not exist is skipped. The script keeps any copy already on disk and continues.
+
 ## Server Administration
 
 | Plugin | State | Source | Notes |
