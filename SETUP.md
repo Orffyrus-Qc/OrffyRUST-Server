@@ -28,7 +28,7 @@ call RustDedicated.exe -batchmode -server.port 28015 -queryport 28016 -rcon.port
 -server.hostname "OrffyRUST_PRIVATE" ^
 -server.level "Procedural Map"
 -server.seed 2322396
--server.worldsize 1004
+-server.worldsize 4200
 -rcon.password "YOUR_RCON_PASSWORD_HERE" ^
 -server.identity "backupSystem" ^
 -server.maxplayers 120 ^
