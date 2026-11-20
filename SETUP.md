@@ -24,7 +24,7 @@ Keep that in mind if you edit the launch-parameter block.
 ## 2. Server launch parameters (lines ~63–72)
 
 ```bat
-call RustDedicated.exe -batchmode -server.port 28015 -queryport 28016 -rcon.port 28017 -app.port 28018 -logfile^
+call RustDedicated.exe -server.port 28015 -queryport 28016 -rcon.port 28017 -app.port 28018 -logfile^
 -server.hostname "OrffyRUST_PRIVATE" ^
 -server.level "Procedural Map"
 -server.seed 2322396
